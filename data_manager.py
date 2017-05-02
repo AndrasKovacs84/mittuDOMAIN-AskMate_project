@@ -8,14 +8,15 @@ main_path = os.path.dirname(os.path.abspath(__file__))
 #
 # @file_name: string
 # @table: list of lists of strings
-def get_datatable_from_file(file_name):
+# @idx: list of integer
+def get_datatable_from_file(file_name, idx):
     try:
         if os.stat(file_name).st_size > 0:
             datatable = []
             with open(file_name, 'r') as datafile:
                 datafile_reader = csv.reader(datafile, delimiter=';', skipinitialspace=True, lineterminator='\n')
                 for row in datafile_reader:
-                    row = decode_base64(row)
+                    row = decode_base64[idx]
                     datatable.append(row)
             return datatable
         else:
@@ -28,8 +29,8 @@ def get_datatable_from_file(file_name):
 #
 # @file_name: string
 # @datalist: list of strings
-def append_datatable_to_file(file_name, datalist):
-    datalist = encode_base64(datalist)
+# @idx: list of integer
+def append_datatable_to_file(file_name, datalist, idx):
     with open((main_path + '/' + file_name), 'a', newline="") as csvfile:
         datafile_writer = csv.writer(csvfile, delimiter=';', skipinitialspace=True, lineterminator='\n')
         datafile_writer.writerow(datalist)
@@ -39,28 +40,36 @@ def append_datatable_to_file(file_name, datalist):
 #
 # @file_name: string
 # @datatable: list of lists of strings
-def write_datatable_to_file(file_name, datatable):
-    datatable = encode_base64(datatable)
+# @idx: list of integer
+def write_datatable_to_file(file_name, datatable, idx):
+    datatable = encode_base64(datatable, idx)
     with open((main_path + '/' + file_name), 'w', newline="") as csvfile:
         datafile_writer = csv.writer(csvfile, delimiter=';', skipinitialspace=True, lineterminator='\n')
         for row in datatable:
-            row = encode_base64(row)
             datafile_writer.writerow(row)
 
 
-# encoding base64 charachter chain to string
+# encodig a list of list or a list of string
 #
-# @data: list of string
-def encode_base64(data):
-    data[4] = base64.b64encode(b'{}'.format(data[4])
-    data[5] = base64.b64encode(b'{}'.format(data[5])
-    return data
+# @data: list of lists of string or list of string
+# @idx: list of integer
+def encode_base64(data, idx):
+    if any(isinstance(sub, list) for sub in data):
+        for i, row in enumerate(data):
+            for num in idx:
+                data[i][num] = base64.b64encode(b'{}'.format(row[num])
+        return data
+    else:
+        for num in idx:
+            data[num] = base64.b64encode(b'{}'.format(data[num])
+        return data
 
 
-# encoding base64 charachter chain to string
+# encodig a list of list or a list of string
 #
-# @data: list of string
-def decode_base64(data):
-    data[4] = base64.b64decode(b'{}'.format(data[4])
-    data[5] = base64.b64decode(b'{}'.format(data[5])
+# @data: list of lists of string or list of string
+# @idx: list of integer
+def decode_base64(data, idx):
+    for num in idx:
+        data[num] = base64.b64encode(b'{}'.format(data[num])
     return data
