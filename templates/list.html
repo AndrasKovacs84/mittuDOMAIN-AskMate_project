@@ -1,1 +1,15 @@
-list page
+<h2>AskMate</h2>
+<table>
+    <tr>
+        {% for header in questions[0] %}
+        <th>{{ header }}</th>
+        {% endfor %}
+    </tr>
+    {% for i in range(1, questions|length) %}
+    <tr>
+        {% for row in questions[i] %}
+            <td>{{ row }}</td>
+        {% endfor %}
+    </tr>
+    {% endfor %}
+</table>
