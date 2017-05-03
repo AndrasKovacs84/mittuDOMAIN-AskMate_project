@@ -34,12 +34,12 @@ def question(question_id, methods=['GET']):
     and from 'question/question_id/new_answer' (returning here after posting a new answer to the question)
     """
     question = data_manager.get_datatable_from_file('data/question.csv', [4, 5, 6])[question_id]
-    all_answers = data_manager.get_datatable_from_file('data/answer.csv', [5, 6, 7])
+    all_answers = data_manager.get_datatable_from_file('data/answer.csv', [4, 5])
     answers_to_question_id = []
     for ans in all_answers:
         if str(question_id) in ans:
             answers_to_question_id.append(ans)
-    return render_template('question_details.html', question=question, answers=answers_to_question_id)
+    return render_template('question_details.html', question_text=question, answers=answers_to_question_id)
 
 
 @app.route('/question/<int:question_id>')
@@ -47,6 +47,7 @@ def save_new_question(question_id, methods=['POST']):
     """
     Displays the details of a question after saving it as a new question from 'question/new/'
     """
+    questions = data_manager.get_datatable_from_file('data/question.csv', [4, 5, 6])
     return render_template('question_details.html', question=question)
 
 
@@ -67,6 +68,21 @@ def new_answer_post(question_id):
     # TODO: Check validity of request.form['answer'] (min 10 char).
     # TODO: Append request.form['answer'] to answer.csv
     return render_template('question_details.html')
+
+
+@app.route('/question/new_id', methods=['POST'])
+def new_question_id():
+    # TODO: time stamp generator
+    # TODO: generate new ID
+    # TODO: init numbers
+    # TODO: sending data with format
+    button_value = request.form["button"]
+    if button_value == NEW STORY:
+        # read question data
+        data = data_manager.get_datatable_from_file('data/question.csv', [4, 5, 6])
+        data_form = []
+        new_form_id = int(data[-1][0]) + 1
+        data_form_story = request.form["story"]
 
 
 if __name__ == '__main__':
