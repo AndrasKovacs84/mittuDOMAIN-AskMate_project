@@ -1,12 +1,12 @@
 import csv
 from flask import Flask, render_template, request, url_for, redirect
 
-import data_manager
+# import data_manager
 
 app = Flask(__name__)
 
 
-@app.route('/', request, methods=['GET'])
+@app.route('/', methods=['GET'])
 def list_questions():
     """
     Displays list of questions.
@@ -35,13 +35,23 @@ def question(question_id):
     return render_template('question_details.html')
 
 
-@app.route('/question/<int:question_id>/new_answer')
-def new_answer(question_id):
+@app.route('/question/<int:question_id>/new_answer', methods=['GET'])
+def new_answer_form(question_id):
     """
     Displays empty form for entering an answer to the selected question (also displays question on top).
     We arrive here from '/question/question_id/'
     """
-    return render_template('answer_form.html')
+    return render_template('answer_form.html', form_action='/question/' + str(question_id) + '/new_answer')
+
+
+@app.route('/question/<int:question_id>/new_answer', methods=['POST'])
+def new_answer_post(question_id):
+    """
+    Handles the POST request coming from answer_form.html.
+    """
+    # TODO: Check validity of request.form['answer'] (min 10 char).
+    # TODO: Append request.form['answer'] to answer.csv
+    return render_template('question_details.html')
 
 
 if __name__ == '__main__':
