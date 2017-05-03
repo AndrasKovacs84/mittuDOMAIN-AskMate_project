@@ -13,7 +13,11 @@ def list_questions():
     Loads data from question.csv file, sorted by time.
     Sorting of data will be here.
     """
+    TIME_INDEX = 1
     questions = data_manager.get_datatable_from_file('data/question.csv', [4, 5, 6])
+    questions[1:].sort(key=lambda question: question[TIME_INDEX])
+    for i in range(1, len(questions)):
+        questions[i][TIME_INDEX] = data_manager.decode_time(questions[i][TIME_INDEX])
     return render_template('list.html', questions=questions)
 
 
@@ -33,13 +37,17 @@ def question(question_id, methods=['GET']):
     We arrive here from '/',
     and from 'question/question_id/new_answer' (returning here after posting a new answer to the question)
     """
+    TIME_INDEX = 1
     question = data_manager.get_datatable_from_file('data/question.csv', [4, 5, 6])[question_id]
     all_answers = data_manager.get_datatable_from_file('data/answer.csv', [4, 5])
     answers_to_question_id = []
     for ans in all_answers:
         if str(question_id) in ans:
             answers_to_question_id.append(ans)
-    return render_template('question_details.html', question_text=question, answers=answers_to_question_id, question_id=question_id)
+
+    for answer in answers_to_question_id:
+        answer[TIME_INDEX] = data_manager.decode_time(answer[TIME_INDEX])
+    return render_template('question_details.html', question=question, answers=answers_to_question_id)
 
 
 @app.route('/question/<int:question_id>')

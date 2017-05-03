@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
 <title>{{ title }}</title>
-<h2>{{ question_title }}</h2>
-<p> {{ question_text }}</p>
+<h2>{{ question[4] }}</h2>
+<p> {{ question[5] }}</p>
 <h3>Answers</h3>
 {% for answer in answers %}
 <p>{{ answer }}</p>
