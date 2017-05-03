@@ -62,7 +62,7 @@ def encode_base64(data, idx):
         return data
     else:
         for num in idx:
-            data[num] = base64.b64encode(b'{}'.format(data[num])
+            data[num] = base64.b64encode(b'{}'.format(data[num]))
         return data
 
 
@@ -77,9 +77,7 @@ def decode_base64(data, idx):
 
 
 def decode_time(data_line):
-    data[1] = datetime.datetime.fromtimestamp(
-        int(data[1])
-    )
+    data[1] = str(datetime.datetime.fromtimestamp(int(data[1])))
     return date
 
 def encode_time(data_line):
