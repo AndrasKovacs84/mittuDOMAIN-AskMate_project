@@ -17,7 +17,7 @@ def get_datatable_from_file(file_name, idx):
             with open(file_name, 'r') as datafile:
                 datafile_reader = csv.reader(datafile, delimiter=';', skipinitialspace=True, lineterminator='\n')
                 for row in datafile_reader:
-                    row = decode_base64[idx]
+                    row = decode_base64(row, idx)
                     datatable.append(row)
             return datatable
         else:
@@ -32,6 +32,7 @@ def get_datatable_from_file(file_name, idx):
 # @datalist: list of strings
 # @idx: list of integer
 def append_datatable_to_file(file_name, datalist, idx):
+    datalist = encode_base64(datalist, idx)
     with open((main_path + '/' + file_name), 'a', newline="") as csvfile:
         datafile_writer = csv.writer(csvfile, delimiter=';', skipinitialspace=True, lineterminator='\n')
         datafile_writer.writerow(datalist)
@@ -72,7 +73,7 @@ def encode_base64(data, idx):
 # @idx: list of integer
 def decode_base64(data, idx):
     for num in idx:
-        data[num] = base64.b64encode(b'{}'.format(data[num])
+        data[num] = base64.b64encode(b'{}'.format(data[num]))
     return data
 
 
