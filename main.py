@@ -1,7 +1,7 @@
 import csv
 from flask import Flask, render_template, request, url_for, redirect
 
-# import data_manager
+import data_manager
 
 app = Flask(__name__)
 
@@ -17,7 +17,7 @@ def list_questions():
     return render_template('list.html', questions=questions)
 
 
-@app.route('/question/new', methods=['GET', 'POST'])
+@app.route('/question/new', methods=['GET'])
 def new_question():
     """
     We arrive here from the list.html "ask question" button.
@@ -27,13 +27,22 @@ def new_question():
 
 
 @app.route('/question/<int:question_id>')
-def question(question_id):
+def question(question_id, methods=['GET']):
     """
     Displays the the requested question and the answers to it if they exist.
-    We arrive here from '/' (selected in list with "details" btn), 'question/new/' (after creating a new question),
+    We arrive here from '/',
     and from 'question/question_id/new_answer' (returning here after posting a new answer to the question)
     """
+
     return render_template('question_details.html')
+
+
+@app.route('/question/<int:question_id>')
+def save_new_question(question_id, methods=['POST']):
+    """
+    Displays the details of a question after saving it as a new question from 'question/new/'
+    """
+    return render_template('question_details.html', question=question)
 
 
 @app.route('/question/<int:question_id>/new_answer', methods=['GET'])
