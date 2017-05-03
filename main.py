@@ -3,6 +3,16 @@ from flask import Flask, render_template, request, url_for, redirect
 
 import data_manager
 
+"""
+Global variables for decoding specific columns in data
+@DATA_TIME_INDEX: Unix timestamped column
+@QUESTION_B64_COL: Base64 coded columns in question.csv
+@ANSWER_B64_COL: Base64 coded columns in answer.csv
+"""
+DATA_TIME_INDEX = 1
+QUESTION_B64_COL = (4, 5, 6)
+ANSWER_B64_COL = (4, 5)
+
 app = Flask(__name__)
 
 
@@ -13,11 +23,10 @@ def list_questions():
     Loads data from question.csv file, sorted by time.
     Sorting of data will be here.
     """
-    TIME_INDEX = 1
-    questions = data_manager.get_datatable_from_file('data/question.csv', [4, 5, 6])
-    questions[1:].sort(key=lambda question: question[TIME_INDEX])
+    questions = data_manager.get_datatable_from_file('data/question.csv', QUESTION_B64_COL)
+    questions[1:].sort(key=lambda question: question[DATA_TIME_INDEX])
     for i in range(1, len(questions)):
-        questions[i][TIME_INDEX] = data_manager.decode_time(questions[i][TIME_INDEX])
+        questions[i][DATA_TIME_INDEX] = data_manager.decode_time(questions[i][DATA_TIME_INDEX])
     return render_template('list.html', questions=questions)
 
 
@@ -37,16 +46,15 @@ def question(question_id, methods=['GET']):
     We arrive here from '/',
     and from 'question/question_id/new_answer' (returning here after posting a new answer to the question)
     """
-    TIME_INDEX = 1
-    question = data_manager.get_datatable_from_file('data/question.csv', [4, 5, 6])[question_id]
-    all_answers = data_manager.get_datatable_from_file('data/answer.csv', [4, 5])
+    question = data_manager.get_datatable_from_file('data/question.csv', QUESTION_B64_COL)[question_id]
+    all_answers = data_manager.get_datatable_from_file('data/answer.csv', ANSWER_B64_COL)
     answers_to_question_id = []
     for ans in all_answers:
         if str(question_id) in ans:
             answers_to_question_id.append(ans)
 
     for answer in answers_to_question_id:
-        answer[TIME_INDEX] = data_manager.decode_time(answer[TIME_INDEX])
+        answer[DATA_TIME_INDEX] = data_manager.decode_time(answer[DATA_TIME_INDEX])
     return render_template('question_details.html', question=question, answers=answers_to_question_id)
 
 
@@ -55,7 +63,7 @@ def save_new_question(question_id, methods=['POST']):
     """
     Displays the details of a question after saving it as a new question from 'question/new/'
     """
-    questions = data_manager.get_datatable_from_file('data/question.csv', [4, 5, 6])
+    questions = data_manager.get_datatable_from_file('data/question.csv', QUESTION_B64_COL)
     return render_template('question_details.html', question=question)
 
 
@@ -87,7 +95,7 @@ def new_question_id():
     button_value = request.form["button"]
     if button_value == "NEW STORY":
         # read question data
-        data = data_manager.get_datatable_from_file('data/question.csv', [4, 5, 6])
+        data = data_manager.get_datatable_from_file('data/question.csv', QUESTION_B64_COL)
         data_form = []
         new_form_id = int(data[-1][0]) + 1
         data_form_story = request.form["story"]
