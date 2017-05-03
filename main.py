@@ -81,7 +81,7 @@ def new_answer_post(question_id):
     """
     Handles the POST request coming from answer_form.html.
     """
-    # TODO: Check validity of request.form['answer'] (min 10 char).
+    # TODO: Check validity of request.form['answer'] (min 10 char). <textarea maxlength="20" minlength="5"></textarea>
     # TODO: Append request.form['answer'] to answer.csv
     return render_template('question_details.html')
 
