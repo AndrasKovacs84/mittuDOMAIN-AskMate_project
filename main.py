@@ -13,7 +13,8 @@ def list_questions():
     Loads data from question.csv file, sorted by time.
     Sorting of data will be here.
     """
-    return render_template('list.html')
+    questions = data_manager.get_datatable_from_file('question.csv')
+    return render_template('list.html', questions=questions)
 
 
 @app.route('/question/new', methods=['GET', 'POST'])
