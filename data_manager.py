@@ -17,7 +17,8 @@ def get_datatable_from_file(file_name, idx):
             with open(file_name, 'r') as datafile:
                 datafile_reader = csv.reader(datafile, delimiter=';', skipinitialspace=True, lineterminator='\n')
                 for row in datafile_reader:
-                    row = decode_base64(row, idx)
+                    if row[0] != "ID":
+                        row = decode_base64(row, idx)
                     datatable.append(row)
             return datatable
         else:
@@ -59,11 +60,11 @@ def encode_base64(data, idx):
     if any(isinstance(sub, list) for sub in data):
         for i, row in enumerate(data):
             for num in idx:
-                data[i][num] = base64.b64encode(b'{}'.format(row[num]))
+                data[i][num] = base64.b64encode(row[num].encode("utf-8"))
         return data
     else:
         for num in idx:
-            data[num] = base64.b64encode(b'{}'.format(data[num]))
+            data[num] = base64.b64encode(data[num].encode("utf-8"))
         return data
 
 
@@ -73,7 +74,7 @@ def encode_base64(data, idx):
 # @idx: list of integer
 def decode_base64(data, idx):
     for num in idx:
-        data[num] = base64.b64encode(b'{}'.format(data[num]))
+        data[num] = base64.b64decode(data[num]).decode("utf-8")
     return data
 
 
