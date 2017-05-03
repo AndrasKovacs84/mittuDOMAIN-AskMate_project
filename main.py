@@ -77,7 +77,7 @@ def new_question_id():
     # TODO: init numbers
     # TODO: sending data with format
     button_value = request.form["button"]
-    if button_value == NEW STORY:
+    if button_value == "NEW STORY":
         # read question data
         data = data_manager.get_datatable_from_file('data/question.csv', [4, 5, 6])
         data_form = []
