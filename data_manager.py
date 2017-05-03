@@ -76,10 +76,19 @@ def decode_base64(data, idx):
     return data
 
 
+# decoding unix timestamp use before display
+#
+# @data_line: list of strnig
 def decode_time(data_line):
     data[1] = str(datetime.datetime.fromtimestamp(int(data[1])))
     return date
 
+
+def get_unixtime():
+    return int(time.time())
+
+"""
 def encode_time(data_line):
 
     pass
+"""
