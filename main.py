@@ -39,7 +39,7 @@ def question(question_id, methods=['GET']):
     for ans in all_answers:
         if str(question_id) in ans:
             answers_to_question_id.append(ans)
-    return render_template('question_details.html', question_text=question, answers=answers_to_question_id)
+    return render_template('question_details.html', question_text=question, answers=answers_to_question_id, question_id=question_id)
 
 
 @app.route('/question/<int:question_id>')

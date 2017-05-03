@@ -7,5 +7,5 @@
 {% for answer in answers %}
 <p>{{ answer }}</p>
 {% endfor %}
-<button name="answer_form" onclick="location.href='/'" type="button">Answer to this question</button>
+<button name="answer_form" onclick="location.href='/question/{{ question_id }}/new_answer'" type="button">Answer this question</button>
 <button name="index" onclick="location.href='/'" type="button">Back to Index</button>

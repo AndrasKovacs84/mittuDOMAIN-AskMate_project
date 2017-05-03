@@ -1,12 +1,6 @@
 body {
     font-family: Helvetica, Arial, sans-serif;
-    background-image: url("background.jpg");
-}
-
-body[name=new_story] {
-    width:80%;
-    margin-left:25%;
-    margin-right:25%;
+    /*background-image: url("background.jpg");*/
 }
 
 table {
@@ -55,13 +49,14 @@ td {
     height: 32px;
 }
 
-tr:nth-child(even) td {
+tr, td {
     background: #F1F1F1;
 }
 
-tr:nth-child(odd) td {
+tr:hover td {
     background: #bfc7ff;
 }
+
 
 button:hover, input[type=submit]:hover {
     background-color: #60d665;
@@ -92,19 +87,8 @@ textarea {
     padding: 0px 0px 0px 0px;
 }
 
-input[name=business_value] {
-    width: 100px;
-}
-
-p[name=footer_menu] {
-    width: 51%;
-    min-width: 370px;
-}
-
-button[name=index_button] {
-    float: right;
-}
-
-input[type=submit] {
-    margin-left: 38%;
+table tbody tr td a {
+  display: block;
+  width: 100%;
+  height: 100%;
 }
