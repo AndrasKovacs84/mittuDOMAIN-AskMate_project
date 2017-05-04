@@ -25,14 +25,10 @@ def list_questions():
     """
     questions = data_manager.get_datatable_from_file('data/question.csv', QUESTION_B64_COL)
     question_header = questions[0]
-    print(question_header)
     questions = sorted(questions[1:], key=lambda question: int(question[DATA_TIME_INDEX]), reverse=True)
     for i in range(0, len(questions)):
-        print(questions[i][DATA_TIME_INDEX])
         questions[i][DATA_TIME_INDEX] = data_manager.decode_time(questions[i][DATA_TIME_INDEX])
-    print([q for q in questions])
     questions.insert(0, question_header)
-    print(questions)
     return render_template('list.html', questions=questions)
 
 
@@ -88,12 +84,9 @@ def new_question_id():
 
 
 @app.route('/question/<int:question_id>/delete', methods=['GET'])
-def delete_question():
-    button_value = request.form["button"]
-    questions = data_manager.get_datatable_from_file('data/question.csv', (4, 5))
-    answers = data_manager.get_datatable_from_file('data/answer.csv', (4, 5))
-    common.delete_data_by_id(questions, button_value, QUESTION_B64_COL, 0)
-    common.delete_data_by_id(answers, button_value, ANSWER_B64_COL, 3)
+def delete_question(question_id):
+    common.delete_data_by_id('data/question.csv', question_id, QUESTION_B64_COL, 0)
+    common.delete_data_by_id('data/answer.csv', question_id, ANSWER_B64_COL, 3)
     return redirect("/")
 
 if __name__ == '__main__':

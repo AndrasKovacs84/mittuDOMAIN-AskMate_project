@@ -38,7 +38,8 @@ def get_new_answer(data, req_form, question_id):
     return data
 
 
-def delete_data_by_id(data, button_value, code_columns, question_id):
-    new_data = [row for row in data if row[question_id] != button_value]
-    data_manager.write_datatable_to_file("data/story.csv", new_data, code_columns)
+def delete_data_by_id(data_rout, question_id, decode_columns, id_column):
+    data = data_manager.get_datatable_from_file(data_rout, decode_columns)
+    new_data = [row for row in data if row[id_column] != str(question_id)]
+    data_manager.write_datatable_to_file(data_rout, new_data, decode_columns)
     return new_data
