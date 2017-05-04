@@ -108,7 +108,6 @@ def edit_question_form(question_id):
 @app.route('/question/<int:question_id>', methods=['POST'])
 def update_question(question_id):
     questions = data_manager.get_datatable_from_file('data/question.csv', QUESTION_B64_COL)
-    print(request.form)
     for question in questions:
         if question[0] == str(question_id):
             question[4] = request.form["title"]
