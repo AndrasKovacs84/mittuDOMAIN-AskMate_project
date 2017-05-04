@@ -251,5 +251,5 @@ paket-files/
 .idea/
 *.sln.iml
 
-__pycache__
+__pycache__/
 .vscode

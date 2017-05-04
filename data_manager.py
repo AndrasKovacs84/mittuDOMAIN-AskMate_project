@@ -2,6 +2,7 @@ import csv
 import os.path
 import base64
 import datetime
+import time
 main_path = os.path.dirname(os.path.abspath(__file__))
 
 
@@ -61,11 +62,11 @@ def encode_base64(data, idx):
         for i, row in enumerate(data):
             if row[0] != "ID":
                 for num in idx:
-                    data[i][num] = base64.b64encode(row[num].encode("utf-8"))
+                    data[i][num] = base64.b64encode(row[num].encode("utf-8")).decode("utf-8")
         return data
     else:
         for num in idx:
-            data[num] = base64.b64encode(data[num].encode("utf-8"))
+            data[num] = base64.b64encode(data[num].encode("utf-8")).decode("utf-8")
         return data
 
 

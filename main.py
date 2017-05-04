@@ -1,6 +1,7 @@
 import csv
 from flask import Flask, render_template, request, url_for, redirect
 
+import common
 import data_manager
 
 """
@@ -50,7 +51,7 @@ def question(question_id, methods=['GET']):
     all_answers = data_manager.get_datatable_from_file('data/answer.csv', ANSWER_B64_COL)
     answers_to_question_id = []
     for ans in all_answers:
-        if str(question_id) in ans:
+        if str(question_id) == ans[3]:
             answers_to_question_id.append(ans)
 
     for answer in answers_to_question_id:
@@ -64,7 +65,8 @@ def new_answer_form(question_id):
     Displays empty form for entering an answer to the selected question (also displays question on top).
     We arrive here from '/question/question_id/'
     """
-    return render_template('answer_form.html', form_action='/question/' + str(question_id) + '/new_answer')
+    question = data_manager.get_datatable_from_file('data/question.csv', QUESTION_B64_COL)[question_id]
+    return render_template('answer_form.html', question=question)
 
 
 @app.route('/question/new_id', methods=['POST'])
@@ -75,16 +77,16 @@ def new_question_id():
     # TODO: sending data with format
     print(request.form)
     button_value = request.form["button"]
-    if button_value == "NEW STORY":
-        # read question data
+    if button_value == "Post Question":
         data = data_manager.get_datatable_from_file('data/question.csv', QUESTION_B64_COL)
         new_question = common.get_new_question(data, request.form)
         return redirect("/question/" + str(new_question[0]))
-    if button_value == "NEW ANSWER":
+    if button_value.isdigit():
+        print(button_value)
         data = data_manager.get_datatable_from_file('data/answer.csv', ANSWER_B64_COL)
-        new_answer = common.get_new_question(data, request.form)
-        return redirect("/question/" + str(new_answer[0]))
+        new_answer = common.get_new_answer(data, request.form, button_value)
+        return redirect("/question/" + button_value)
 
 
 if __name__ == '__main__':
-    app.run()
+    app.run(debug=True)
