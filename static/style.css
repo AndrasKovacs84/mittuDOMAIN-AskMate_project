@@ -74,13 +74,6 @@ p {
 	color:#9aa0ab;
 }
 
-/*own*/
-
-body {
-    font-family: Helvetica, Arial, sans-serif;
-    /*background-image: url("background.jpg");*/
-}
-
 table {
     color: #333;
     width: 640px;
@@ -91,9 +84,7 @@ table {
     margin-left: 0px;
 }
 
-h1, h3 {
-    color: #303030;
-}
+
 
 h1 {
     margin-top: 0px;
