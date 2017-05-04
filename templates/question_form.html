@@ -6,17 +6,22 @@
 <body>
 
  <center><b><h2>Post New Question</h2></b></center>
-    <center><form action="/list" method="post">
+    <center>
+    <form action="/list" method="post">
         <br>
         <br>
+        <label>Question Title:</label>
+        <input type="text" name="title" required minlength="10">
         <br>
         <br>
+        <label>Question</label>
         <textarea name="story" required minlength="10" rows="15" cols="97"></textarea>
         <br>
         <br>
         <br>
         <input type="submit" value="Post Question"  name="button" align="center"/>
-    </form></center>
+    </form>
+    </center>
 
 </body>
 </html>
