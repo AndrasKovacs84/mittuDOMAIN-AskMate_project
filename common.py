@@ -50,3 +50,9 @@ def lookup_item_by_id(path_as_string, decode_columns, id):
     for entry in data:
         if entry[0] == str(id):
             return entry
+
+
+def search_row_by_id(question_id, question):
+    for row in question[1:]:
+        if int(row[0]) == question_id:
+            return row

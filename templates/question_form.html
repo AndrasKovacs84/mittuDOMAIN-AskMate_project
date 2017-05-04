@@ -1,10 +1,10 @@
+<!DOCTYPE html>
 <html>
 <head>
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
     <title>{{ title }}</title>
 </head>
 <body>
-
  <center><b><h2>Post New Question</h2></b></center>
     <center>
     <form action= "{{ form.action }}" method="{{ form.method }}">
@@ -24,6 +24,5 @@
         <input type="submit" value="Post Question"  name="button" align="center"/>
     </form>
     </center>
-
 </body>
 </html>
