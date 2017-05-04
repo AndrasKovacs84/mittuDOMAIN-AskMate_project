@@ -4,8 +4,8 @@ import data_manager
 # Create new question with its elements in the csv
 # CSV title: ID;Submisson Time;View Number;Vote Number;Title;Message;Image
 #
-# @data: list of list - whole answer table 
-# @req_form: dictionary from html form 
+# @data: list of list - whole answer table
+# @req_form: dictionary from html form
 def get_new_question(data, req_form):
     idx = str(int(data[-1][0]) + 1)
     local_time = data_manager.get_unixtime()
@@ -38,6 +38,12 @@ def get_new_answer(data, req_form, question_id):
     return data
 
 
+# Delete data by question ID, writeing to file
+#
+# @data_rout: string - csv file rout
+# @question_id: int - marked question id to delete
+# @decode_columns: tuple of int - decodeable columns
+# @id_column: int - which column hase the question ID
 def delete_data_by_id(data_rout, question_id, decode_columns, id_column):
     data = data_manager.get_datatable_from_file(data_rout, decode_columns)
     new_data = [row for row in data if row[id_column] != str(question_id)]
@@ -45,6 +51,12 @@ def delete_data_by_id(data_rout, question_id, decode_columns, id_column):
     return new_data
 
 
+# selecting question by ID returning that question details
+#
+# @path_as_string: string - csv file rout
+# @question_id: int - marked question id to delete
+# @decode_columns: tuple of int - decodeable columns
+# @id: int - the ID you are looking for
 def lookup_item_by_id(path_as_string, decode_columns, id):
     data = data_manager.get_datatable_from_file(path_as_string, decode_columns)
     for entry in data:
@@ -52,6 +64,10 @@ def lookup_item_by_id(path_as_string, decode_columns, id):
             return entry
 
 
+# selecting question by ID
+#
+# @question_id: int - marked question id to delete
+# @question: tuple of int - decodeable columns
 def search_row_by_id(question_id, question):
     for row in question[1:]:
         if int(row[0]) == question_id:
