@@ -20,14 +20,19 @@ app = Flask(__name__)
 @app.route('/', methods=['GET'])
 def list_questions():
     """
-    Displays list of questions.
+    Displays the list of questions.
     Loads data from question.csv file, sorted by time.
-    Sorting of data will be here.
     """
     questions = data_manager.get_datatable_from_file('data/question.csv', QUESTION_B64_COL)
-    questions[1:].sort(key=lambda question: question[DATA_TIME_INDEX])
-    for i in range(1, len(questions)):
+    question_header = questions[0]
+    print(question_header)
+    questions = sorted(questions[1:], key=lambda question: int(question[DATA_TIME_INDEX]), reverse=True)
+    for i in range(0, len(questions)):
+        print(questions[i][DATA_TIME_INDEX])
         questions[i][DATA_TIME_INDEX] = data_manager.decode_time(questions[i][DATA_TIME_INDEX])
+    print([q for q in questions])
+    questions.insert(0, question_header)
+    print(questions)
     return render_template('list.html', questions=questions)
 
 
@@ -71,22 +76,25 @@ def new_answer_form(question_id):
 
 @app.route('/question/new_id', methods=['POST'])
 def new_question_id():
-    # TODO: time stamp generator
-    # TODO: generate new ID
-    # TODO: init numbers
-    # TODO: sending data with format
-    print(request.form)
     button_value = request.form["button"]
     if button_value == "Post Question":
         data = data_manager.get_datatable_from_file('data/question.csv', QUESTION_B64_COL)
         new_question = common.get_new_question(data, request.form)
         return redirect("/question/" + str(new_question[0]))
     if button_value.isdigit():
-        print(button_value)
         data = data_manager.get_datatable_from_file('data/answer.csv', ANSWER_B64_COL)
         new_answer = common.get_new_answer(data, request.form, button_value)
         return redirect("/question/" + button_value)
 
+
+@app.route('/question/<int:question_id>/delete', methods=['GET'])
+def delete_question():
+    button_value = request.form["button"]
+    questions = data_manager.get_datatable_from_file('data/question.csv', (4, 5))
+    answers = data_manager.get_datatable_from_file('data/answer.csv', (4, 5))
+    common.delete_data_by_id(questions, button_value, QUESTION_B64_COL, 0)
+    common.delete_data_by_id(answers, button_value, ANSWER_B64_COL, 3)
+    return redirect("/")
 
 if __name__ == '__main__':
     app.run(debug=True)
