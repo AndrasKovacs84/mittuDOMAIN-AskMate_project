@@ -1,25 +1,29 @@
 <!DOCTYPE html>
+<html>
 <head>
-<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
-<title>{{ title }}</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+    <title>{{ title }}</title>
 </head>
-<h2>AskMate</h2>
-<table>
-    <tr>
-        {% for header in questions[0] %}
-        <th>{{ header }}</th>
+<body>
+    <h2>AskMate</h2>
+    <table>
+        <tr>
+            {% for header in questions[0] %}
+            <th>{{ header }}</th>
+            {% endfor %}
+            <th>View Question</th>
+        </tr>
+        {% for i in range(1, questions|length) %}
+        <tr>  
+            {% set outer_loop = loop %}
+            {% for row in questions[i] %}
+                <td>{{ row }}</td>
+                {% if loop.index == questions[i]|length %}
+                <td><button name="index_button" onclick="location.href='/question/{{ outer_loop.index }}'" type="button">View</button></td>
+                {% endif %}
+            {% endfor %}
+        </tr>
         {% endfor %}
-        <th>View Question</th>
-    </tr>
-    {% for i in range(1, questions|length) %}
-    <tr>  
-        {% set outer_loop = loop %}
-        {% for row in questions[i] %}
-            <td>{{ row }}</td>
-            {% if loop.index == questions[i]|length %}
-            <td><button name="index_button" onclick="location.href='/question/{{ outer_loop.index }}'" type="button">View</button></td>
-            {% endif %}
-        {% endfor %}
-    </tr>
-    {% endfor %}
-</table>
+    </table>
+</body>
+</html>
