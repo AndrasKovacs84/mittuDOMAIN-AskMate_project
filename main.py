@@ -38,7 +38,9 @@ def new_question():
     We arrive here from the list.html "ask question" button.
     Displays an empty question form.
     """
-    return render_template('question_form.html')
+    form = {'action': '/question/new_id',
+            'method': 'GET'}
+    return render_template('question_form.html', form=form)
 
 
 @app.route('/question/<int:question_id>')
@@ -88,6 +90,20 @@ def delete_question(question_id):
     common.delete_data_by_id('data/question.csv', question_id, QUESTION_B64_COL, 0)
     common.delete_data_by_id('data/answer.csv', question_id, ANSWER_B64_COL, 3)
     return redirect("/")
+
+
+@app.route('/question/<int:question_id>/edit', methods=['GET'])
+def edit_question_form(question_id):
+    question = common.lookup_item_by_id('data/question.csv', QUESTION_B64_COL, question_id)
+    form = {'action': '/question/<int:question_id>',
+            'method': 'POST'}
+    return render_template("question_form.html", question=question, form=form)
+
+
+@app.route('/question/<int:question_id>')
+def update_question(question_id, methods=['POST']):
+    pass
+
 
 if __name__ == '__main__':
     app.run(debug=True)

@@ -43,3 +43,10 @@ def delete_data_by_id(data_rout, question_id, decode_columns, id_column):
     new_data = [row for row in data if row[id_column] != str(question_id)]
     data_manager.write_datatable_to_file(data_rout, new_data, decode_columns)
     return new_data
+
+
+def lookup_item_by_id(path_as_string, decode_columns, id):
+    data = data_manager.get_datatable_from_file(path_as_string, decode_columns)
+    for entry in data:
+        if entry[0] == str(id):
+            return entry

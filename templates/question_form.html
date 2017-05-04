@@ -7,17 +7,17 @@
 
  <center><b><h2>Post New Question</h2></b></center>
     <center>
-    <form action="/question/new_id" method="post">
+    <form action= "{{ form.action }}" method="{{ form.method }}">
         <br>
         <br>
         <label>Question Title:</label>
         <br>
-        <input type="text" name="title" required minlength="10">
+        <input type="text" name="title" required minlength="10" value="{{ question[4]}}">
         <br>
         <br>
         <label>Question</label>
         <br>
-        <textarea name="story" required minlength="10" rows="15" cols="97"></textarea>
+        <textarea name="story" required minlength="10" rows="15" cols="97">{{ question[5] }}</textarea>
         <br>
         <br>
         <br>
