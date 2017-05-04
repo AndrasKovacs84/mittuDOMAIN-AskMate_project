@@ -58,15 +58,6 @@ def question(question_id, methods=['GET']):
     return render_template('question_details.html', question=question, answers=answers_to_question_id)
 
 
-@app.route('/question/<int:question_id>')
-def save_new_question(question_id, methods=['POST']):
-    """
-    Displays the details of a question after saving it as a new question from 'question/new/'
-    """
-    questions = data_manager.get_datatable_from_file('data/question.csv', QUESTION_B64_COL)
-    return render_template('question_details.html', question=question)
-
-
 @app.route('/question/<int:question_id>/new_answer', methods=['GET'])
 def new_answer_form(question_id):
     """
@@ -74,16 +65,6 @@ def new_answer_form(question_id):
     We arrive here from '/question/question_id/'
     """
     return render_template('answer_form.html', form_action='/question/' + str(question_id) + '/new_answer')
-
-
-@app.route('/question/<int:question_id>/new_answer', methods=['POST'])
-def new_answer_post(question_id):
-    """
-    Handles the POST request coming from answer_form.html.
-    """
-    # TODO: Check validity of request.form['answer'] (min 10 char). <textarea maxlength="20" minlength="5"></textarea>
-    # TODO: Append request.form['answer'] to answer.csv
-    return render_template('question_details.html')
 
 
 @app.route('/question/new_id', methods=['POST'])
