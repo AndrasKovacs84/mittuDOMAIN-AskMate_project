@@ -14,6 +14,8 @@
             <th>{{ header }}</th>
             {% endfor %}
             <th>View Question</th>
+            <th>Edit</th>
+            <th>Delete</th>
         </tr>
         {% for i in range(1, questions|length) %}
         <tr>  
@@ -22,6 +24,9 @@
                 <td>{{ row }}</td>
                 {% if loop.index == questions[i]|length %}
                 <td><button name="index_button" onclick="location.href='/question/{{ outer_loop.index }}'" type="button">View</button></td>
+                <td>  <a href="/question/{{ questions[outer_loop.index][0] }}/edit"> <img src={{ url_for("static", filename="edit.png" ) }} alt="edit" width="30" height="30" title="edit"> </a> </td>
+                <td>  <a href="/delete/{{ questions[outer_loop.index][0] }}/delete"> <img src={{ url_for("static", filename="delete.png") }} alt="delete" width="30" height="30" title="delete"> </a> </td>                
+
                 {% endif %}
             {% endfor %}
         </tr>
