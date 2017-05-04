@@ -38,9 +38,11 @@ def new_question():
     We arrive here from the list.html "ask question" button.
     Displays an empty question form.
     """
-    form = {'action': '/question/new_id',
-            'method': 'GET'}
-    return render_template('question_form.html', form=form)
+    question = []
+    form_action = '/question/new_id'
+    button_caption = 'Post Question'
+    return render_template('question_form.html', form_action=form_action,
+                           question=question, button_caption=button_caption)
 
 
 @app.route('/question/<int:question_id>')
@@ -97,14 +99,22 @@ def delete_question(question_id):
 @app.route('/question/<int:question_id>/edit', methods=['GET'])
 def edit_question_form(question_id):
     question = common.lookup_item_by_id('data/question.csv', QUESTION_B64_COL, question_id)
-    form = {'action': '/question/<int:question_id>',
-            'method': 'POST'}
-    return render_template("question_form.html", question=question, form=form)
+    form_action = '/question/' + str(question_id)
+    button_caption = 'Update Question'
+    return render_template("question_form.html", question=question, form_action=form_action, button_caption=button_caption)
 
 
-@app.route('/question/<int:question_id>')
-def update_question(question_id, methods=['POST']):
-    pass
+@app.route('/question/<int:question_id>', methods=['POST'])
+def update_question(question_id):
+    questions = data_manager.get_datatable_from_file('data/question.csv', QUESTION_B64_COL)
+    print(request.form)
+    for question in questions:
+        if question[0] == str(question_id):
+            question[4] = request.form["title"]
+            question[5] = request.form['story']
+            break
+    data_manager.write_datatable_to_file('data/question.csv', questions, QUESTION_B64_COL)
+    return redirect('/question/' + str(question_id))
 
 
 if __name__ == '__main__':
