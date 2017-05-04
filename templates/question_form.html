@@ -1,24 +1,21 @@
 <html>
 <head>
-
-
-
-
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+    <title>{{ title }}</title>
 </head>
 <body>
 
- <center><b><h2>User Story manager - {{ title }}</h2></b></center>
+ <center><b><h2>Post New Question</h2></b></center>
     <center><form action="/list" method="post">
-        <label for="title">NEW STORY</label>
         <br>
         <br>
         <br>
         <br>
-        <textarea name="story" rows="15" cols="90"></textarea>
+        <textarea name="story" rows="15" cols="97"></textarea>
         <br>
         <br>
         <br>
-        <input type="submit" value="NEW STORY"  name="button" align="center"/>
+        <input type="submit" value="Post Question"  name="button" align="center"/>
     </form></center>
 
 </body>
