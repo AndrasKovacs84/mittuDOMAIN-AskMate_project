@@ -92,13 +92,17 @@ def new_question_id():
     # TODO: generate new ID
     # TODO: init numbers
     # TODO: sending data with format
+    print(request.form)
     button_value = request.form["button"]
     if button_value == "NEW STORY":
         # read question data
         data = data_manager.get_datatable_from_file('data/question.csv', QUESTION_B64_COL)
-        data_form = []
-        new_form_id = int(data[-1][0]) + 1
-        data_form_story = request.form["story"]
+        new_question = common.get_new_question(data, request.form)
+        return redirect("/question/" + str(new_question[0]))
+    if button_value == "NEW ANSWER":
+        data = data_manager.get_datatable_from_file('data/answer.csv', ANSWER_B64_COL)
+        new_answer = common.get_new_question(data, request.form)
+        return redirect("/question/" + str(new_answer[0]))
 
 
 if __name__ == '__main__':

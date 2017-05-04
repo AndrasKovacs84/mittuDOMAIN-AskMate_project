@@ -59,8 +59,9 @@ def write_datatable_to_file(file_name, datatable, idx):
 def encode_base64(data, idx):
     if any(isinstance(sub, list) for sub in data):
         for i, row in enumerate(data):
-            for num in idx:
-                data[i][num] = base64.b64encode(row[num].encode("utf-8"))
+            if row[0] != "ID":
+                for num in idx:
+                    data[i][num] = base64.b64encode(row[num].encode("utf-8"))
         return data
     else:
         for num in idx:
