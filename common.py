@@ -43,3 +43,9 @@ def delete_data_by_id(data_rout, question_id, decode_columns, id_column):
     new_data = [row for row in data if row[id_column] != str(question_id)]
     data_manager.write_datatable_to_file(data_rout, new_data, decode_columns)
     return new_data
+
+
+def search_row_by_id(question_id, question):
+    for row in question[1:]:
+        if int(row[0]) == question_id:
+            return row

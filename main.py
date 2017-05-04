@@ -48,7 +48,8 @@ def question(question_id, methods=['GET']):
     We arrive here from '/',
     and from 'question/question_id/new_answer' (returning here after posting a new answer to the question)
     """
-    question = data_manager.get_datatable_from_file('data/question.csv', QUESTION_B64_COL)[question_id]
+    question = data_manager.get_datatable_from_file('data/question.csv', QUESTION_B64_COL)
+    question = common.search_row_by_id(question_id, question)
     all_answers = data_manager.get_datatable_from_file('data/answer.csv', ANSWER_B64_COL)
     answers_to_question_id = []
     for ans in all_answers:
@@ -66,7 +67,8 @@ def new_answer_form(question_id):
     Displays empty form for entering an answer to the selected question (also displays question on top).
     We arrive here from '/question/question_id/'
     """
-    question = data_manager.get_datatable_from_file('data/question.csv', QUESTION_B64_COL)[question_id]
+    question = data_manager.get_datatable_from_file('data/question.csv', QUESTION_B64_COL)
+    question = common.search_row_by_id(question_id, question)
     return render_template('answer_form.html', question=question)
 
 
