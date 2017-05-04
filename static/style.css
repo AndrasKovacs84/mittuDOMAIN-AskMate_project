@@ -1,3 +1,81 @@
+html,
+body {
+    background-color: #ffffff;
+    font-size: 15px;
+    color: #565656;
+    width: 100%;
+    padding-left: 10px;
+    padding-right: 10px;
+    margin-left: auto;
+    margin-right: auto;
+    font-family: 'open_sansregular';
+    font-weight: 300;
+}
+
+p {
+    margin: 0 0 15px;
+}
+
+ol,
+ul {
+    list-style: none;
+    padding: 0;
+}
+img {
+    max-width: 100%;
+}
+
+h1,
+h2,
+h3 {
+    font-family: 'Lane', sans-serif;
+    font-weight: 300;
+    margin: 0;
+}
+h4,
+h5 {
+    font-family: 'roboto', sans-serif;
+    font-weight: 300;
+    margin: 0;
+    line-height: 2rem;
+}
+h1 {
+    font-size: 3rem;
+    font-weight: 300;
+	line-height:inherit;
+}
+h2 {
+    font-size: 2.5rem;
+    margin-bottom: .9rem;
+	line-height:inherit;
+}
+h3 {
+    font-weight: 300;
+    margin-bottom: .9rem;
+    font-size: 2.1rem;
+    line-height: 2.5rem;
+}
+h4 {
+    font-size: 1.6rem;
+    line-height: 2.2rem;
+    margin-bottom: 1.1rem;
+}
+h5 {
+    font-size: 1.3rem;
+    margin-bottom: 1rem;
+}
+h6 {
+    font-size: 1rem;
+    margin-bottom: .9rem;
+}
+p {
+    line-height: 1.5rem;
+    font-size: 1.1rem;
+	color:#9aa0ab;
+}
+
+/*own*/
+
 body {
     font-family: Helvetica, Arial, sans-serif;
     /*background-image: url("background.jpg");*/
@@ -42,11 +120,6 @@ td {
     word-wrap: break-word;
     background: #FAFAFA;
     text-align: center;
-}
-
-#icon_edit, #icon_bin {
-    width: 32px;
-    height: 32px;
 }
 
 tr, td {
