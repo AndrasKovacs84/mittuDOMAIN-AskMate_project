@@ -5,7 +5,14 @@
     <title>{{ title }}</title>
 </head>
 <body>
- <center><b><h2>Post New Question</h2></b></center>
+ <center>
+    <b>
+        {% if not question %}
+        <h2>Post New Question</h2>
+        {% else %}
+        <h2>Edit Question</h2>
+        {% endif %}
+    </b></center>
     <center>
     <form action= "{{ form_action }}" method="POST">
         <br>

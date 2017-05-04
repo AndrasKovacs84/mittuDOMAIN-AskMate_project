@@ -55,14 +55,15 @@ def question(question_id, methods=['GET']):
     question = data_manager.get_datatable_from_file('data/question.csv', QUESTION_B64_COL)
     question = common.search_row_by_id(question_id, question)
     all_answers = data_manager.get_datatable_from_file('data/answer.csv', ANSWER_B64_COL)
-    answers_to_question_id = []
+    answers_for_question_id = []
     for ans in all_answers:
         if str(question_id) == ans[3]:
-            answers_to_question_id.append(ans)
+            answers_for_question_id.append(ans)
 
-    for answer in answers_to_question_id:
+    for answer in answers_for_question_id:
         answer[DATA_TIME_INDEX] = data_manager.decode_time(answer[DATA_TIME_INDEX])
-    return render_template('question_details.html', question=question, answers=answers_to_question_id)
+    return render_template('question_details.html', question=question,
+                            answers=answers_for_question_id, answer_title=all_answers[0])
 
 
 @app.route('/question/<int:question_id>/new_answer', methods=['GET'])
